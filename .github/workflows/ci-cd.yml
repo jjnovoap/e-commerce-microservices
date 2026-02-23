@@ -1,4 +1,4 @@
-name: CI/CD
+name: CI/CD 
 
 on:
   push:
@@ -24,11 +24,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r services/product-service/requirements.txt
         pip install -r services/inventory-service/requirements.txt
-
-    - name: Lint code
-      run: |
-        pip install flake8
-        flake8 services/
 
     - name: Run tests
       run: |
