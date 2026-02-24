@@ -5,3 +5,5 @@ metadata:
   namespace: ecommerce
 data:
   INVENTORY_SERVICE_URL: http://inventory-service:8001
+  APP_ENV: "production"
+  LOG_LEVEL: "info"

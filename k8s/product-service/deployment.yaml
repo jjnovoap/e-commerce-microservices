@@ -5,6 +5,11 @@ metadata:
   namespace: ecommerce
 spec:
   replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25% 
   selector: 
     matchLabels:
       app: product-service
@@ -15,8 +20,8 @@ spec:
     spec: 
       containers:
       - name: product-service
-        image: product-service:1.0
-        imagePullPolicy: IfNotPresent
+        image: jjnovoap/product-service:latest
+        imagePullPolicy: Always
         ports: 
           - containerPort: 8000
         resources:
@@ -26,6 +31,11 @@ spec:
           limits:
             cpu: "250m"
             memory: "256Mi"
+        envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secret
         env:
           - name: INVENTORY_SERVICE_URL
             valueFrom:

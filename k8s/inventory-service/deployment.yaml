@@ -5,6 +5,11 @@ metadata:
   namespace: ecommerce
 spec:
   replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
   selector:
     matchLabels:
       app: inventory-service
@@ -15,8 +20,8 @@ spec:
     spec:
       containers:
         - name: inventory-service
-          image: inventory-service:1.0
-          imagePullPolicy: IfNotPresent
+          image: kubectl apply -f k8s/product/product-deployment.yaml
+          imagePullPolicy: Always
           ports:
             - containerPort: 8001
           resources:
@@ -26,6 +31,11 @@ spec:
             limits:
               memory: "512Mi"
               cpu: "500m"
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secret
           livenessProbe:
             httpGet:
               path: /health

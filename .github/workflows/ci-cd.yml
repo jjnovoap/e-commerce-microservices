@@ -49,16 +49,18 @@ jobs:
 
     - name: Build and push Product Service
       run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/product-service:latest services/product-service/
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/product-service:${{ github.sha }} -t ${{ secrets.DOCKERHUB_USERNAME }}/product-service:latest services/product-service/
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/product-service:${{ github.sha }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/product-service:latest
-        echo "✅ Product Service image pushed successfully"
+        echo "✅ Product Service images pushed (SHA + latest)"
 
     - name: Build and push Inventory Service
       run: |
-        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/inventory-service:latest services/inventory-service/
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/inventory-service:${{ github.sha }} -t ${{ secrets.DOCKERHUB_USERNAME }}/inventory-service:latest services/inventory-service/
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/inventory-service:${{ github.sha }}
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/inventory-service:latest
-        echo "✅ Inventory Service image pushed successfully"
-        
+        echo "✅ Inventory Service images pushed (SHA + latest)"
+
     - name: List pushed images
       run: |
         docker images | grep "${{ secrets.DOCKERHUB_USERNAME }}"

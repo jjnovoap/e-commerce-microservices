@@ -3,11 +3,15 @@ kind: Ingress
 metadata:
   name: ecommerce-ingress
   namespace: ecommerce
+
 spec:
+  ingressClassName: nginx
+
   rules:
     - host: ecommerce.local
       http:
         paths:
+
           - path: /products
             pathType: Prefix
             backend:
@@ -15,3 +19,11 @@ spec:
                 name: product-service
                 port:
                   number: 8000
+
+          - path: /inventory
+            pathType: Prefix
+            backend:
+              service:
+                name: inventory-service
+                port:
+                  number: 8001
