@@ -8,10 +8,6 @@ inventory_db = {
     2: {"product_id": 2, "stock": 5},
 }
 
-@router.get("/products/health")
-async def health():
-    return {"status": "ok"}
-
 @router.get("/{product_id}", response_model=Inventory)
 def get_inventory(product_id: int):
     inventory = inventory_db.get(product_id)

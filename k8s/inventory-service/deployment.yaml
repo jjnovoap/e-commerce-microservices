@@ -38,13 +38,13 @@ spec:
                 name: app-secret
           livenessProbe:
             httpGet:
-              path: /inventory/health
+              path: /health
               port: 8001
             initialDelaySeconds: 5
             periodSeconds: 10
           readinessProbe:
             httpGet:
-              path: /inventory/health
+              path: /health
               port: 8001
             initialDelaySeconds: 5
             periodSeconds: 5
