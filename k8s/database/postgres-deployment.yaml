@@ -50,7 +50,7 @@ spec:
             command:
               - pg_isready
               - -U
-              - ecommerce_user
+              - POSTGRES_USER
           initialDelaySeconds: 30
           periodSeconds: 10
 
@@ -59,7 +59,7 @@ spec:
             command:
               - pg_isready
               - -U
-              - ecommerce_user
+              - POSTGRES_USER
           initialDelaySeconds: 5
           periodSeconds: 5
 

@@ -1,19 +1,9 @@
-from pydantic import BaseModel
+from sqlalchemy import Column, Integer, String, Float
+from app.database import Base
 
-class ProductBase(BaseModel):
-    name: str
-    price: float
+class ProductDB(Base):
+    __tablename__ = "products"
 
-class ProductCreate(ProductBase):
-    pass
-
-class Product(ProductBase):
-    id: int
-
-class Inventory(BaseModel):
-    product_id: int
-    stock: int
-
-class ProductWithInventory(BaseModel):
-    product: Product
-    inventory: Inventory
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    price = Column(Float, nullable=False)
