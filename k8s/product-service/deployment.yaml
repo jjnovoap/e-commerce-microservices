@@ -49,13 +49,13 @@ spec:
                 key: INVENTORY_SERVICE_URL
         livenessProbe:
           httpGet:
-            path: /products/health
+            path: /health
             port: 8000
-          initialDelaySeconds: 5
+          initialDelaySeconds: 15
           periodSeconds: 10
         readinessProbe: 
           httpGet:
-            path: /products/health
+            path: /health
             port: 8000
-          initialDelaySeconds:  5
+          initialDelaySeconds:  10
           periodSeconds: 5

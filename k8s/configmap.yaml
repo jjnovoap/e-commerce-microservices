@@ -5,6 +5,6 @@ metadata:
   namespace: ecommerce
 data:
   INVENTORY_SERVICE_URL: http://inventory-service:8001
-  DATABASE_URL: postgresql://admin:admin123@postgres:5432/ecommerce
+  DATABASE_URL: postgresql://ecommerce_user:ecommerce_pass@postgres:5432/ecommerce
   APP_ENV: "production"
   LOG_LEVEL: "info"

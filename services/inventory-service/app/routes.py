@@ -3,6 +3,11 @@ from app.models import Inventory
 
 router = APIRouter()
 
+
+@router.get("/health")
+async def health():
+    return {"status": "ok"}
+
 inventory_db = {
     1: {"product_id": 1, "stock": 10},
     2: {"product_id": 2, "stock": 5},
