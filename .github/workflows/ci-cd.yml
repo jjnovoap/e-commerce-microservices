@@ -71,4 +71,4 @@ jobs:
     - name: List pushed images
       run: |
         docker images | grep "${{ secrets.DOCKERHUB_USERNAME }}"
-        echo "🎉 Both images should be visible above"
+        echo "🎉 Three images should be visible above"

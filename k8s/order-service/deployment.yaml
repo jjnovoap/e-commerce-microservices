@@ -8,10 +8,12 @@ spec:
   selector:
     matchLabels:
       app: order-service
+      
   template:
     metadata:
       labels:
         app: order-service
+
     spec:
       containers:
         - name: order-service
