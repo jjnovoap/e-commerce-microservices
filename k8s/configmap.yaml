@@ -6,6 +6,7 @@ metadata:
 data:
   PRODUCT_SERVICE_URL: http://product-service:8000/products
   INVENTORY_SERVICE_URL: http://inventory-service:8001/inventory
+  JWT_SECRET: supersecret
   DATABASE_URL: postgresql://ecommerce_user:ecommerce_pass@postgres:5432/ecommerce
   APP_ENV: "production"
   LOG_LEVEL: "info"
