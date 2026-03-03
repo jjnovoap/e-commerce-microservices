@@ -1,23 +1,54 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.orm import Session
+from app.database import SessionLocal
 from app.models import Inventory
+from app.schemas import InventoryReserve
 
-router = APIRouter()
+router = APIRouter(prefix="/inventory", tags=["Inventory"])
 
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 
 @router.get("/health")
-async def health():
+def health():
     return {"status": "ok"}
 
-inventory_db = {
-    1: {"product_id": 1, "stock": 10},
-    2: {"product_id": 2, "stock": 5},
-}
+@router.get("/{product_id}")
+def get_inventory(product_id: int, db: Session = Depends(get_db)):
 
-@router.get("/{product_id}", response_model=Inventory)
-def get_inventory(product_id: int):
-    inventory = inventory_db.get(product_id)
+    inventory = db.query(Inventory).filter(
+        Inventory.product_id == product_id
+    ).first()
 
     if not inventory:
         raise HTTPException(status_code=404, detail="Inventory not found")
 
     return inventory
+
+
+@router.post("/reserve")
+def reserve_stock(data: InventoryReserve, db: Session = Depends(get_db)):
+
+    inventory = db.query(Inventory).filter(
+        Inventory.product_id == data.product_id
+    ).first()
+
+    if not inventory:
+        raise HTTPException(status_code=404, detail="Inventory not found")
+
+    if inventory.stock < data.quantity:
+        raise HTTPException(status_code=400, detail="Not enough stock")
+
+    inventory.stock -= data.quantity
+
+    db.commit()
+    db.refresh(inventory)
+
+    return {
+        "message": "Stock reserved",
+        "remaining_stock": inventory.stock
+    }

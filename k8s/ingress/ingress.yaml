@@ -11,6 +11,14 @@ spec:
     - host: ecommerce.local
       http:
         paths:
+        
+          - path: /auth
+            pathType: Prefix
+            backend:
+              service:
+                name: auth-service
+                port:
+                  number: 8002
 
           - path: /products
             pathType: Prefix
@@ -27,3 +35,11 @@ spec:
                 name: inventory-service
                 port:
                   number: 8001
+
+          - path: /orders
+            pathType: Prefix
+            backend:
+              service:
+                name: order-service
+                port:
+                  number: 8003
