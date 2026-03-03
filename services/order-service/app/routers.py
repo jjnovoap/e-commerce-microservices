@@ -50,11 +50,3 @@ async def create_order(order: OrderCreate, db: Session = Depends(get_db)):
     db.refresh(new_order)
 
     return new_order
-
-@router.post("/")
-async def create_order(
-    product_id: int,
-    quantity: int,
-    user=Depends(verify_token),
-    db: Session = Depends(get_db)
-):
