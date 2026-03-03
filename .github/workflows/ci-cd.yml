@@ -68,6 +68,13 @@ jobs:
         docker push ${{ secrets.DOCKERHUB_USERNAME }}/order-service:latest
         echo "✅ Order Service images pushed (SHA + latest)"
 
+    - name: Build and push Auth Service
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:${{ github.sha }} -t ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:latest services/auth-service/
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:${{ github.sha }}
+        docker push ${{ secrets.DOCKERHUB_USERNAME }}/auth-service:latest
+        echo "✅ Auth Service images pushed (SHA + latest)"
+
     - name: List pushed images
       run: |
         docker images | grep "${{ secrets.DOCKERHUB_USERNAME }}"
