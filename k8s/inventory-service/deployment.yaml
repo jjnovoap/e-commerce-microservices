@@ -36,6 +36,18 @@ spec:
                 name: app-config
             - secretRef:
                 name: app-secret
+          env:
+          - name: DATABASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: ecommerce-config
+                key: DATABASE_URL
+          - name: INVENTORY_SERVICE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: ecommerce-config
+                key: INVENTORY_SERVICE_URL
+
           livenessProbe:
             httpGet:
               path: /inventory/health

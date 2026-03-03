@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
 
-class OrdenCreate(BaseModel):
+class OrderCreate(BaseModel):
     product_id: int
     quantity: int
 
