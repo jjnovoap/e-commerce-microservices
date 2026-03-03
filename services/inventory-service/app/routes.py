@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from app.database import SessionLocal
-from app.models import Inventory
-from app.schemas import InventoryReserve
+from .database import SessionLocal
+from .models import Inventory
+from .schemas import InventoryReserve
 
 router = APIRouter(prefix="/inventory", tags=["Inventory"])
 
@@ -19,7 +19,6 @@ def health():
 
 @router.get("/{product_id}")
 def get_inventory(product_id: int, db: Session = Depends(get_db)):
-
     inventory = db.query(Inventory).filter(
         Inventory.product_id == product_id
     ).first()
@@ -32,7 +31,6 @@ def get_inventory(product_id: int, db: Session = Depends(get_db)):
 
 @router.post("/reserve")
 def reserve_stock(data: InventoryReserve, db: Session = Depends(get_db)):
-
     inventory = db.query(Inventory).filter(
         Inventory.product_id == data.product_id
     ).first()
@@ -44,7 +42,6 @@ def reserve_stock(data: InventoryReserve, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Not enough stock")
 
     inventory.stock -= data.quantity
-
     db.commit()
     db.refresh(inventory)
 
